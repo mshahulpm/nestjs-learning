@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Cat } from '../interfaces/cat.interface';
-import { CreateCatDto } from "./dto/cats.dto";
+import { CreateCatDto } from "../dto/cats.dto";
 
 
 @Injectable()

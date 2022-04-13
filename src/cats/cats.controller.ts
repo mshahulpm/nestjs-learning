@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, HttpException, HttpStatus, Param, ParseIntPipe, UsePipes, } from "@nestjs/common";
-import { CreateCatDto } from "./dto/cats.dto";
+import { CreateCatDto } from "../dto/cats.dto";
 import { CatsService } from "./cats.service";
 import { Cat } from "../interfaces/cat.interface";
 import { ForbiddenException } from "src/custom/exceptions";
