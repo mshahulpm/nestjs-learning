@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, HttpException, HttpStatus, Param, ParseIntPipe, UsePipes, } from "@nestjs/common";
+import { Controller, Get, Post, Body, HttpException, HttpStatus, Param, ParseIntPipe, UsePipes, UseGuards, SetMetadata, } from "@nestjs/common";
 import { CreateCatDto } from "../dto/cats.dto";
 import { CatsService } from "./cats.service";
 import { Cat } from "../interfaces/cat.interface";
 import { ForbiddenException } from "src/custom/exceptions";
 import { JoiValidationPipe } from "src/custom/pipes";
 import * as Joi from "joi";
+import { RolesGuard } from "src/guard/role.guard";
+import { Roles } from "src/custom/decorator";
 
 
 const createcatSchema = Joi.object({
@@ -14,11 +16,13 @@ const createcatSchema = Joi.object({
 })
 
 @Controller('cats')
+@UseGuards(RolesGuard)
 export class Cats_Controller {
 
     constructor(private catService: CatsService) { }
 
     @Post()
+    @Roles('admin')
     @UsePipes(new JoiValidationPipe(createcatSchema))
     async create(@Body() body: CreateCatDto) {
 
