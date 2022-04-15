@@ -1,10 +1,13 @@
-import { Controller, Get, Post, Body } from "@nestjs/common";
+import { Controller, Get, Post, Body, UseInterceptors } from "@nestjs/common";
 import { DogService } from "./dogs.service";
 import { Dog } from "src/interfaces/dogs";
 import { CreateDogDto } from "src/dto/dog.dto";
 import { ClassValidationPipe } from "src/custom/pipes";
+import { LoggingIntercepter } from "src/intercepters/loging.intercepter";
 
 @Controller('dogs')
+// @UseInterceptors(LoggingIntercepter)
+@UseInterceptors(new LoggingIntercepter())   // another method
 export class DogsController {
 
     constructor(private dogService: DogService) { }
@@ -24,5 +27,14 @@ export class DogsController {
     @Get()
     async findAll(): Promise<Dog[]> {
         return this.dogService.findAll()
+    }
+
+    @Get('/timeOut')
+    async timeOut(): Promise<any> {
+        // return this.dogService.findAll()
+        setTimeout(() => {
+            return Promise.resolve(this.dogService.findAll())
+        }, 10000)
+
     }
 }
