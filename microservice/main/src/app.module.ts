@@ -7,10 +7,15 @@ import { AppService } from './app.service';
   imports: [
     ClientsModule.register([
       {
-        name: 'USERS',
-        transport: Transport.TCP
-      }
-    ])
+        name: 'COMMUNICATION',
+        transport: Transport.TCP,
+      },
+      {
+        name: 'ANALYTICS',
+        transport: Transport.TCP,
+        options: { port: 3001 },
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [AppService],
